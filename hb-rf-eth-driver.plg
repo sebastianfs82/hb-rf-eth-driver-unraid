@@ -1,0 +1,41 @@
+<?xml version='1.0' standalone='yes'?>
+
+<!DOCTYPE PLUGIN [
+<!ENTITY name      "hb-rf-eth-driver">
+<!ENTITY author    "homelab">
+<!ENTITY version   "2026.11.06">
+<!ENTITY kver      "6.18.58-Unraid">
+<!ENTITY pkgver    "6.18.58u">
+<!ENTITY pkgmd5    "e05c02aae69deeb2896907993283b368">
+<!-- TODO: replace with your GitHub user/repo once pushed, e.g. "janedoe/hb-rf-eth-driver-unraid" -->
+<!ENTITY repo      "sebastianfs82/hb-rf-eth-driver-unraid">
+<!ENTITY baseurl   "https://raw.githubusercontent.com/&repo;/main">
+<!ENTITY plugdir   "/boot/config/plugins/&name;">
+<!ENTITY pkgfile   "&name;-&pkgver;-x86_64-1.txz">
+<!ENTITY pluginURL "&baseurl;/hb-rf-eth-driver.plg">
+]>
+
+<PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;" launch="">
+
+<CHANGES>
+###2026.11.06
+- Initial build: generic_raw_uart.ko + hb_rf_eth.ko from alexreinert/piVCCU,
+  compiled for kernel &kver;
+</CHANGES>
+
+<FILE Run="/bin/bash">
+<INLINE>
+RUNNING_KVER="$(uname -r)"
+if [[ "${RUNNING_KVER}" != "&kver;" ]]; then
+  echo "WARNING: this hb-rf-eth-driver build is for kernel &kver;, but you are running ${RUNNING_KVER}."
+  echo "The kernel modules will NOT load until it is rebuilt for ${RUNNING_KVER}."
+fi
+</INLINE>
+</FILE>
+
+<FILE Name="&plugdir;/&pkgfile;" Run="upgradepkg --install-new">
+<URL>&baseurl;/&pkgfile;</URL>
+<MD5>&pkgmd5;</MD5>
+</FILE>
+
+</PLUGIN>
