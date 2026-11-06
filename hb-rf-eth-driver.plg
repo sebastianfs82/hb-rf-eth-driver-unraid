@@ -3,21 +3,25 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "hb-rf-eth-driver">
 <!ENTITY author    "homelab">
-<!ENTITY version   "2026.11.06">
+<!ENTITY version   "2026.11.06.2">
 <!ENTITY kver      "6.18.58-Unraid">
 <!ENTITY pkgver    "6.18.58u">
-<!ENTITY pkgmd5    "e05c02aae69deeb2896907993283b368">
+<!ENTITY pkgbuild  "2">
+<!ENTITY pkgmd5    "6f1ed29bf3069e60bfb9c202c5d9d9e0">
 <!-- TODO: replace with your GitHub user/repo once pushed, e.g. "janedoe/hb-rf-eth-driver-unraid" -->
 <!ENTITY repo      "sebastianfs82/hb-rf-eth-driver-unraid">
 <!ENTITY baseurl   "https://raw.githubusercontent.com/&repo;/main">
 <!ENTITY plugdir   "/boot/config/plugins/&name;">
-<!ENTITY pkgfile   "&name;-&pkgver;-x86_64-1.txz">
+<!ENTITY pkgfile   "&name;-&pkgver;-x86_64-&pkgbuild;.txz">
 <!ENTITY pluginURL "&baseurl;/hb-rf-eth-driver.plg">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;" launch="">
 
 <CHANGES>
+###2026.11.06.2
+- Fix doinst.sh: use absolute path for the module directory check so
+  depmod/modprobe actually run on install (was silently skipped before).
 ###2026.11.06
 - Initial build: generic_raw_uart.ko + hb_rf_eth.ko from alexreinert/piVCCU,
   compiled for kernel &kver;
